@@ -10,7 +10,7 @@ import { InsufficientReservesError, InsufficientInputAmountError } from '../erro
 export const computePairAddress = ({
   factoryAddress,
   tokenA,
-  tokenB
+  tokenB,
 }: {
   factoryAddress: string
   tokenA: Token
@@ -50,7 +50,10 @@ export class Pair {
    * @param token to check
    */
   public involvesToken(token: Token): boolean {
-    return token.equals(this.token0) || token.equals(this.token1)
+    const [tokenAddress, token0Address, token1Address] = [token, this.token0, this.token1].map(({ address }) =>
+      address.toLowerCase()
+    )
+    return tokenAddress === token0Address || tokenAddress === token1Address
   }
 
   /**
